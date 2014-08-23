@@ -36,7 +36,9 @@ gplot <- qplot(year, emissions, data=df2, color=type, geom=c('point', 'smooth'),
 method='lm',
 main='Total Emissions from PM2.5 in Baltimore City, MD by Source',
 xlab='Year',
-ylab='Total Emissions') + facet_wrap(~type, nrow=2)
+ylab='Total Emissions') +
+facet_wrap(~type, nrow=2) +
+scale_colour_discrete(name = "Source")
 
 # Print plot
 print(gplot)
