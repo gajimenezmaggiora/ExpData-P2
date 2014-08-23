@@ -11,3 +11,24 @@ if( !all( file.exists('./Source_Classification_Code.rds', './summarySCC_PM25.rds
 # Read data
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
+
+# Subset data
+NEIsub <- subset(NEI, fips=='24510')
+
+# Get emissions and dates
+yrs <- NEIsub$year
+pm <- NEIsub$Emissions
+
+# Calculate total emissions per year
+emissions <- tapply(pm, yrs, sum, na.rm=T)
+years <- as.numeric(names(emissions))
+
+# Generate plot
+
+plot(years, emissions, xlab='Year', ylab='Total Emissions', xlim=c(1999,2008))
+abline(lm(emissions ~ years), col='red')
+title('Total Emissions from PM2.5 in Baltimore City, MD')
+
+# Generate png file
+dev.copy(png, file = "./plot2.png")
+dev.off()
